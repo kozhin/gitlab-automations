@@ -1,0 +1,29 @@
+# /etc/gitlab-runner/config.toml
+
+concurrent = 1
+check_interval = 0
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "BuilderBot"
+  url = "https://git.CHANGEME/"
+  token = "SOME_AUT_TOKEN_HERE"
+  executor = "docker"
+  limit = 1
+  [runners.custom_build_dir]
+  [runners.docker]
+    disable_entrypoint_overwrite = false
+    disable_cache = false
+    docker_tls_certdir = ""
+    image = "docker:stable"
+    oom_kill_disable = false
+    privileged = true
+    shm_size = 0
+    tls_verify = false
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
+    extra_hosts = ["git.CHANGEME:CHANGEME"]
+  [runners.cache]
+    [runners.cache.s3]
+    [runners.cache.gcs]
